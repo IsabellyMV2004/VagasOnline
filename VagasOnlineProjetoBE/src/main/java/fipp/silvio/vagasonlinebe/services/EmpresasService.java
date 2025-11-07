@@ -2,26 +2,25 @@ package fipp.silvio.vagasonlinebe.services;
 
 import com.google.gson.Gson;
 import com.mongodb.client.*;
-import fipp.silvio.vagasonlinebe.entities.Interesse;
-import fipp.silvio.vagasonlinebe.entities.Vaga;
+import com.mongodb.client.model.Filters;
+import fipp.silvio.vagasonlinebe.entities.Empresa;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-import com.mongodb.client.model.Filters;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class VagasService {
+public class EmpresasService {
 
     private final String connectionString = "mongodb://localhost:27017";
     private final String dbName = "vagas_online";
-    private final String collectionName = "vagas";
+    private final String collectionName = "empresas";
 
-    public List<Vaga> getAll() {
-        List<Vaga> vagaList = new ArrayList<>();
+    public List<Empresa> getAll() {
+        List<Empresa> empresaList = new ArrayList<>();
 
         try (MongoClient mongoClient = MongoClients.create(connectionString))
         {
@@ -30,17 +29,17 @@ public class VagasService {
             MongoCursor<Document> cursor = collection.find().iterator();
 
             while (cursor.hasNext())
-                vagaList.add(new Gson().fromJson(cursor.next().toJson(), Vaga.class));
+                empresaList.add(new Gson().fromJson(cursor.next().toJson(), Empresa.class));
 
         } catch (Exception e) {
-            System.out.println("Erro ao buscar vagas: " + e.getMessage());
+            System.out.println("Erro ao buscar empresas: " + e.getMessage());
         }
 
-        return vagaList;
+        return empresaList;
     }
 
-    public Vaga getById(String id) {
-        Vaga vaga = null;
+    public Empresa getById(String id) {
+        Empresa empresa = null;
 
         try (MongoClient mongoClient = MongoClients.create(connectionString))
         {
@@ -49,39 +48,39 @@ public class VagasService {
 
             Document doc = collection.find(Filters.eq("_id", new ObjectId(id))).first();
             if (doc != null)
-                vaga = new Gson().fromJson(doc.toJson(), Vaga.class);
+                empresa = new Gson().fromJson(doc.toJson(), Empresa.class);
 
         } catch (Exception e) {
-            System.out.println("Erro ao buscar vaga por ID: " + e.getMessage());
+            System.out.println("Erro ao buscar empresa por ID: " + e.getMessage());
         }
 
-        return vaga;
+        return empresa;
     }
 
-    public void create(Vaga vaga) {
+    public void create(Empresa empresa) {
         try (MongoClient mongoClient = MongoClients.create(connectionString))
         {
             MongoDatabase database = mongoClient.getDatabase(dbName);
             MongoCollection<Document> collection = database.getCollection(collectionName);
 
-            Document doc = Document.parse(new Gson().toJson(vaga));
+            Document doc = Document.parse(new Gson().toJson(empresa));
             collection.insertOne(doc);
         } catch (Exception e) {
-            System.out.println("Erro ao criar vaga: " + e.getMessage());
+            System.out.println("Erro ao criar empresa: " + e.getMessage());
         }
     }
 
-    public void update(String id, Vaga vaga) {
+    public void update(String id, Empresa empresa) {
         try (MongoClient mongoClient = MongoClients.create(connectionString))
         {
             MongoDatabase database = mongoClient.getDatabase(dbName);
             MongoCollection<Document> collection = database.getCollection(collectionName);
 
             Bson filtro = Filters.eq("_id", new ObjectId(id));
-            Document novo = Document.parse(new Gson().toJson(vaga));
+            Document novo = Document.parse(new Gson().toJson(empresa));
             collection.replaceOne(filtro, novo);
         } catch (Exception e) {
-            System.out.println("Erro ao atualizar vaga: " + e.getMessage());
+            System.out.println("Erro ao atualizar empresa: " + e.getMessage());
         }
     }
 
@@ -93,15 +92,7 @@ public class VagasService {
 
             collection.deleteOne(Filters.eq("_id", new ObjectId(id)));
         } catch (Exception e) {
-            System.out.println("Erro ao deletar vaga: " + e.getMessage());
-        }
-    }
-
-    public void registrarInteresse(Interesse interesse) {
-        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
-            MongoDatabase db = mongoClient.getDatabase("vagas_online");
-            MongoCollection<Document> collection = db.getCollection("interesses");
-            collection.insertOne(Document.parse(new Gson().toJson(interesse)));
+            System.out.println("Erro ao deletar empresa: " + e.getMessage());
         }
     }
 }
