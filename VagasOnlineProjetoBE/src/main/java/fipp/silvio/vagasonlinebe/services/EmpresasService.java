@@ -65,8 +65,7 @@ public class EmpresasService extends BaseMongoService {
 
     public void delete(String id) {
         try {
-            database.getCollection(COLLECTION_NAME)
-                    .deleteOne(Filters.eq("_id", new ObjectId(id)));
+            database.getCollection(COLLECTION_NAME).deleteOne(Filters.eq("_id", new ObjectId(id)));
         } catch (Exception e) {
             System.out.println("Erro ao deletar empresa: " + e.getMessage());
         }

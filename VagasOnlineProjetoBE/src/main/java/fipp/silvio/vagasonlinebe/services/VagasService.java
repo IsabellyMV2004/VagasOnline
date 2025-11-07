@@ -76,8 +76,7 @@ public class VagasService extends BaseMongoService {
 
     public void registrarInteresse(Interesse interesse) {
         try {
-            database.getCollection(COLLECTION_INTERESSES)
-                    .insertOne(Document.parse(gson.toJson(interesse)));
+            database.getCollection(COLLECTION_INTERESSES).insertOne(Document.parse(gson.toJson(interesse)));
         } catch (Exception e) {
             System.out.println("Erro ao registrar interesse: " + e.getMessage());
         }
