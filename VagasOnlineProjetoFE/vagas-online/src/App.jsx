@@ -35,7 +35,7 @@ function App() {
 export default App
 */
 
-
+/*
 import React from "react";
 import FormVaga from "./pages/FormVaga";
 import Home from "./pages/Home";
@@ -55,4 +55,32 @@ function App() {
 }
 
 export default App;
+*/
+
+
+/*
+export default function App() {
+  return <h1>Home OK</h1>;
+}*/
+
+
+// App.js
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./AppRoutes";
+
+function App() {
+  return (
+    <Router>
+      <div className="app-background">
+        <AppRoutes />
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
 
