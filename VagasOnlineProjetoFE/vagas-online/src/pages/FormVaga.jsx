@@ -1,18 +1,14 @@
 // src/pages/FormVaga.jsx
 import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { createVaga, updateVaga, getVagaById } from "../services/vagasService";
 import { getEmpresas } from "../services/empresasService";
 import { getCargos } from "../services/cargosService";
 import "../styles/FormVaga.css";
 
-
-
-
-
-export default function FormVaga({ vagaId }) {
+export default function FormVaga() {
   const [empresas, setEmpresas] = useState([]);
   const [cargos, setCargos] = useState([]);
-
   const [vaga, setVaga] = useState({
     empresa: "",
     cargo: "",
@@ -25,6 +21,10 @@ export default function FormVaga({ vagaId }) {
     jornada: "",
     remuneracao: "",
   });
+
+  const { id } = useParams(); // pega o :id da URL (ou undefined se for criação)
+  const navigate = useNavigate();
+  const modoEdicao = Boolean(id);
 
   // 🔹 Carrega empresas e cargos ao iniciar
   useEffect(() => {
@@ -46,12 +46,23 @@ export default function FormVaga({ vagaId }) {
 
   // 🔹 Se for edição, carrega os dados da vaga
   useEffect(() => {
-    if (vagaId) {
-      getVagaById(vagaId)
-        .then((dados) => setVaga(dados))
+    if (modoEdicao) {
+      getVagaById(id)
+        .then((dados) => setVaga({
+          empresa: dados.empresa?.id || "",
+          cargo: dados.cargo?.id || "",
+          cidade: dados.cidade,
+          estado: dados.estado,
+          requisitos: dados.requisitos,
+          formacao: dados.formacao,
+          conhecimentos: dados.conhecimentos,
+          regime: dados.regime,
+          jornada: dados.jornada,
+          remuneracao: dados.remuneracao,
+        }))
         .catch((erro) => console.error("Erro ao buscar vaga:", erro));
     }
-  }, [vagaId]);
+  }, [id, modoEdicao]);
 
   const handleChange = (e) => {
     setVaga({ ...vaga, [e.target.name]: e.target.value });
@@ -67,13 +78,15 @@ export default function FormVaga({ vagaId }) {
         cargo: { id: vaga.cargo },
       };
 
-      if (vagaId) {
-        await updateVaga(vagaId, vagaData);
+      if (modoEdicao) {
+        await updateVaga(id, vagaData);
         alert("Vaga atualizada com sucesso!");
       } else {
         await createVaga(vagaData);
         alert("Vaga criada com sucesso!");
       }
+
+      navigate("/"); // volta para Home após salvar
     } catch (error) {
       alert("Erro ao salvar vaga!");
       console.error(error);
@@ -82,7 +95,7 @@ export default function FormVaga({ vagaId }) {
 
   return (
     <div style={{ maxWidth: "700px", margin: "0 auto" }}>
-      <h2>{vagaId ? "Editar Vaga" : "Cadastrar Nova Vaga"}</h2>
+      <h2>{modoEdicao ? "Editar Vaga" : "Cadastrar Nova Vaga"}</h2>
       <form onSubmit={handleSubmit}>
         {/* Empresa */}
         <label>Empresa:</label>
@@ -177,7 +190,14 @@ export default function FormVaga({ vagaId }) {
           placeholder="Remuneração"
         />
 
-        <button type="submit">{vagaId ? "Atualizar" : "Cadastrar"}</button>
+        <div style={{ marginTop: "15px" }}>
+          <button type="submit">
+            {modoEdicao ? "Atualizar" : "Cadastrar"}
+          </button>
+          <button type="button" onClick={() => navigate("/")}>
+            Voltar
+          </button>
+        </div>
       </form>
     </div>
   );
