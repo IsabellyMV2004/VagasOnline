@@ -94,7 +94,8 @@ export default function FormVaga() {
   };
 
   return (
-    <div style={{ maxWidth: "700px", margin: "0 auto" }}>
+   <div className="form-container">
+  <div className="form-card">
       <h2>{modoEdicao ? "Editar Vaga" : "Cadastrar Nova Vaga"}</h2>
       <form onSubmit={handleSubmit}>
         {/* Empresa */}
@@ -199,6 +200,7 @@ export default function FormVaga() {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 }

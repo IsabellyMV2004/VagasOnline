@@ -1,0 +1,85 @@
+/* Corpo ocupa a tela toda */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Centraliza o conteúdo do formulário */
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* ocupa a tela inteira */
+  background-color: #1f1f1f;
+}
+
+/* Card do formulário */
+.form-card {
+  background-color: #2a2a2a;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Estilo interno dos inputs */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-weight: 600;
+  color: #fff;
+  margin-top: 10px;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #3a3a3a;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+  border-color: #00bcd4;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+button[type="submit"] {
+  background-color: #00bcd4;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #009cb5;
+}
+
+button[type="button"] {
+  background-color: #555;
+  color: #fff;
+}
+
+button[type="button"]:hover {
+  background-color: #666;
+}
+
+div[style*="margin-top"] {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
