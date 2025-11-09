@@ -64,23 +64,45 @@ export default function App() {
 }*/
 
 
-// App.js
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import AppRoutes from "./AppRoutes";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import FormVaga from "./pages/FormVaga";
+
+function Home() {
+  return (
+    <div className="container mt-4">
+      <h1>🏠 Página Inicial</h1>
+      <p>Bem-vindo ao sistema de vagas online!</p>
+      <Link to="/form" className="btn btn-primary">
+        Nova Vaga
+      </Link>
+    </div>
+  );
+}
+
+/*function FormVaga() {
+  return (
+    <div className="container mt-4">
+      <h1>📝 Cadastro de Vaga</h1>
+      <p>Aqui será o formulário de cadastro/edição de vaga.</p>
+      <Link to="/" className="btn btn-secondary">
+        Voltar
+      </Link>
+    </div>
+  );
+}
+*/
 
 function App() {
   return (
     <Router>
-      <div className="app-background">
-        <AppRoutes />
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/form" element={<FormVaga />} />
+      </Routes>
     </Router>
   );
 }
 
 export default App;
-
 
