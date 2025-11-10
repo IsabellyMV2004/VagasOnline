@@ -1,39 +1,31 @@
-// src/services/vagasService.js
-const API_URL = "http://localhost:8080/vagas";
+import api from "./api";
 
 export async function getVagas() {
-  const response = await fetch(API_URL);
-  if (!response.ok) throw new Error("Erro ao buscar vagas");
-  return await response.json();
+  const response = await api.get("/vagas");
+  return response.data;
 }
 
 export async function getVagaById(id) {
-  const response = await fetch(`${API_URL}/${id}`);
-  if (!response.ok) throw new Error("Erro ao buscar vaga");
-  return await response.json();
+  const response = await api.get(`/vagas/${id}`);
+  return response.data;
 }
 
 export async function createVaga(vaga) {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(vaga),
-  });
-  if (!response.ok) throw new Error("Erro ao criar vaga");
-  return await response.json();
+  const response = await api.post("/vagas", vaga);
+  return response.data;
 }
 
 export async function updateVaga(id, vaga) {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(vaga),
-  });
-  if (!response.ok) throw new Error("Erro ao atualizar vaga");
-  return await response.json();
+  const response = await api.put(`/vagas/${id}`, vaga);
+  return response.data;
 }
 
 export async function deleteVaga(id) {
-  const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-  if (!response.ok) throw new Error("Erro ao excluir vaga");
+  const response = await api.delete(`/vagas/${id}`);
+  return response.data;
+}
+
+export async function registrarInteresse(interesse) {
+  const response = await api.post("/vagas/interesse", interesse);
+  return response.data;
 }

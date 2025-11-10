@@ -80,19 +80,6 @@ function Home() {
   );
 }
 
-/*function FormVaga() {
-  return (
-    <div className="container mt-4">
-      <h1>📝 Cadastro de Vaga</h1>
-      <p>Aqui será o formulário de cadastro/edição de vaga.</p>
-      <Link to="/" className="btn btn-secondary">
-        Voltar
-      </Link>
-    </div>
-  );
-}
-*/
-
 function App() {
   return (
     <Router>

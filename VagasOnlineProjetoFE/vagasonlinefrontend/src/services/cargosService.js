@@ -1,7 +1,6 @@
-const API_URL = "http://localhost:8080/cargos";
+import api from "./api";
 
 export async function getCargos() {
-  const response = await fetch(API_URL);
-  if (!response.ok) throw new Error("Erro ao buscar cargos");
-  return await response.json();
+  const response = await api.get("/cargos");
+  return response.data;
 }
