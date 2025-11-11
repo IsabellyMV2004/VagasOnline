@@ -49,8 +49,8 @@ export default function FormVaga() {
     if (modoEdicao) {
       getVagaById(id)
         .then((dados) => setVaga({
-          empresa: dados.empresa?.id || "",
-          cargo: dados.cargo?.id || "",
+          empresa: dados.empresa || "",
+          cargo: dados.cargo || "",
           cidade: dados.cidade,
           estado: dados.estado,
           requisitos: dados.requisitos,
@@ -74,9 +74,10 @@ export default function FormVaga() {
     try {
       const vagaData = {
         ...vaga,
-        empresa: { id: vaga.empresa },
-        cargo: { id: vaga.cargo },
+        empresa: empresas.find((e) => e.nome_fantasia === vaga.empresa), // encontra a empresa completa com base no nome_fantasia
+        cargo: vaga.cargo, // manda o cargo como string
       };
+
 
       if (modoEdicao) {
         await updateVaga(id, vagaData);
@@ -94,120 +95,120 @@ export default function FormVaga() {
   };
 
   return (
-   <div className="form-container">
-  <div className="form-card">
-      <h2>{modoEdicao ? "Editar Vaga" : "Cadastrar Nova Vaga"}</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Empresa */}
-        <label>Empresa:</label>
-        <select
-          name="empresa"
-          value={vaga.empresa}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Selecione a empresa</option>
-          {empresas.map((e) => (
-            <option key={e.id} value={e.id}>
-              {e.nome_fantasia}
-            </option>
-          ))}
-        </select>
+    <div className="form-container">
+      <div className="form-card">
+        <h2>{modoEdicao ? "Editar Vaga" : "Cadastrar Nova Vaga"}</h2>
+        <form onSubmit={handleSubmit}>
+          {/* Empresa */}
+          <label>Empresa:</label>
+          <select
+            name="empresa"
+            value={vaga.empresa}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecione a empresa</option>
+            {empresas.map((e) => (
+              <option key={e.nome_fantasia} value={e.nome_fantasia}>
+                {e.nome_fantasia}
+              </option>
+            ))}
+          </select>
 
-        {/* Cargo */}
-        <label>Cargo:</label>
-        <select
-          name="cargo"
-          value={vaga.cargo}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Selecione o cargo</option>
-          {cargos.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.nome}
-            </option>
-          ))}
-        </select>
+          {/* Cargo */}
+          <label>Cargo:</label>
+          <select
+            name="cargo"
+            value={vaga.cargo}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecione o cargo</option>
+            {cargos.map((c) => (
+              <option key={c.nome} value={c.nome}>
+                {c.nome}
+              </option>
+            ))}
+          </select>
 
-        <label>Cidade:</label>
-        <input
-          type="text"
-          name="cidade"
-          value={vaga.cidade}
-          onChange={handleChange}
-          placeholder="Informe a cidade..."
-          required
-        />
-        <label>Estado:</label>
-        <input
-          type="text"
-          name="estado"
-          value={vaga.estado}
-          onChange={handleChange}
-          placeholder="Informe o estado..."
-          required
-        />
-        <label>Requisitos:</label>
-        <input
-          type="text"
-          name="requisitos"
-          value={vaga.requisitos}
-          onChange={handleChange}
-          placeholder="Informe os requisitos..."
-          required
-        />
-        <label>Formação:</label>
-        <input
-          type="text"
-          name="formacao"
-          value={vaga.formacao}
-          onChange={handleChange}
-          placeholder="Informe a formação..."
-        />
-        <label>Conhecimentos:</label>
-        <input
-          type="text"
-          name="conhecimentos"
-          value={vaga.conhecimentos}
-          onChange={handleChange}
-          placeholder="Informe os conhecimentos..."
-        />
-        <label>Regime:</label>
-        <input
-          type="text"
-          name="regime"
-          value={vaga.regime}
-          onChange={handleChange}
-          placeholder="Informe o regime (CLT, PJ, etc)"
-        />
-        <label>Jornada:</label>
-        <input
-          type="text"
-          name="jornada"
-          value={vaga.jornada}
-          onChange={handleChange}
-          placeholder="informe a jornada (ex: 40h semanais)"
-        />
-        <label>Remuneração:</label>
-        <input
-          type="number"
-          name="remuneracao"
-          value={vaga.remuneracao}
-          onChange={handleChange}
-          placeholder="Informe a remuneração..."
-        />
+          <label>Cidade:</label>
+          <input
+            type="text"
+            name="cidade"
+            value={vaga.cidade}
+            onChange={handleChange}
+            placeholder="Informe a cidade..."
+            required
+          />
+          <label>Estado:</label>
+          <input
+            type="text"
+            name="estado"
+            value={vaga.estado}
+            onChange={handleChange}
+            placeholder="Informe o estado..."
+            required
+          />
+          <label>Requisitos:</label>
+          <input
+            type="text"
+            name="requisitos"
+            value={vaga.requisitos}
+            onChange={handleChange}
+            placeholder="Informe os requisitos..."
+            required
+          />
+          <label>Formação:</label>
+          <input
+            type="text"
+            name="formacao"
+            value={vaga.formacao}
+            onChange={handleChange}
+            placeholder="Informe a formação..."
+          />
+          <label>Conhecimentos:</label>
+          <input
+            type="text"
+            name="conhecimentos"
+            value={vaga.conhecimentos}
+            onChange={handleChange}
+            placeholder="Informe os conhecimentos..."
+          />
+          <label>Regime:</label>
+          <input
+            type="text"
+            name="regime"
+            value={vaga.regime}
+            onChange={handleChange}
+            placeholder="Informe o regime (CLT, PJ, etc)"
+          />
+          <label>Jornada:</label>
+          <input
+            type="text"
+            name="jornada"
+            value={vaga.jornada}
+            onChange={handleChange}
+            placeholder="informe a jornada (ex: 40h semanais)"
+          />
+          <label>Remuneração:</label>
+          <input
+            type="text"
+            name="remuneracao"
+            value={vaga.remuneracao}
+            onChange={handleChange}
+            placeholder="Informe a remuneração..."
+          />
 
-        <div style={{ marginTop: "15px" }}>
-          <button type="submit">
-            {modoEdicao ? "Atualizar" : "Cadastrar"}
-          </button>
-          <button type="button" onClick={() => navigate("/")}>
-            Voltar
-          </button>
-        </div>
-      </form>
-    </div>
+          <div style={{ marginTop: "15px" }}>
+            <button type="submit">
+              {modoEdicao ? "Atualizar" : "Cadastrar"}
+            </button>
+            <button type="button" onClick={() => navigate("/")}>
+              Voltar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
