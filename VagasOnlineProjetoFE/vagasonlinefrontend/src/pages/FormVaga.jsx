@@ -109,7 +109,7 @@ export default function FormVaga() {
           <option value="">Selecione a empresa</option>
           {empresas.map((e) => (
             <option key={e.id} value={e.id}>
-              {e.nome}
+              {e.nome_fantasia}
             </option>
           ))}
         </select>
@@ -130,65 +130,72 @@ export default function FormVaga() {
           ))}
         </select>
 
-        {/* Demais campos */}
+        <label>Cidade:</label>
         <input
           type="text"
           name="cidade"
           value={vaga.cidade}
           onChange={handleChange}
-          placeholder="Cidade"
+          placeholder="Informe a cidade..."
           required
         />
+        <label>Estado:</label>
         <input
           type="text"
           name="estado"
           value={vaga.estado}
           onChange={handleChange}
-          placeholder="Estado"
+          placeholder="Informe o estado..."
           required
         />
+        <label>Requisitos:</label>
         <input
           type="text"
           name="requisitos"
           value={vaga.requisitos}
           onChange={handleChange}
-          placeholder="Requisitos"
+          placeholder="Informe os requisitos..."
           required
         />
+        <label>Formação:</label>
         <input
           type="text"
           name="formacao"
           value={vaga.formacao}
           onChange={handleChange}
-          placeholder="Formação"
+          placeholder="Informe a formação..."
         />
+        <label>Conhecimentos:</label>
         <input
           type="text"
           name="conhecimentos"
           value={vaga.conhecimentos}
           onChange={handleChange}
-          placeholder="Conhecimentos"
+          placeholder="Informe os conhecimentos..."
         />
+        <label>Regime:</label>
         <input
           type="text"
           name="regime"
           value={vaga.regime}
           onChange={handleChange}
-          placeholder="Regime (CLT, PJ, etc)"
+          placeholder="Informe o regime (CLT, PJ, etc)"
         />
+        <label>Jornada:</label>
         <input
           type="text"
           name="jornada"
           value={vaga.jornada}
           onChange={handleChange}
-          placeholder="Jornada (ex: 40h semanais)"
+          placeholder="informe a jornada (ex: 40h semanais)"
         />
+        <label>Remuneração:</label>
         <input
           type="number"
           name="remuneracao"
           value={vaga.remuneracao}
           onChange={handleChange}
-          placeholder="Remuneração"
+          placeholder="Informe a remuneração..."
         />
 
         <div style={{ marginTop: "15px" }}>

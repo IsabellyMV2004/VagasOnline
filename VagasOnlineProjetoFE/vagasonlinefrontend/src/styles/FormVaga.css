@@ -1,8 +1,14 @@
+h2 {
+  color: #fff;
+}
+
+
 /* Corpo ocupa a tela toda */
 html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #1f1f1f;
 }
 
 /* Centraliza o conteúdo do formulário */
@@ -10,7 +16,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* ocupa a tela inteira */
+  height: 160vh; /* ocupa a tela inteira */
   background-color: #1f1f1f;
 }
 
