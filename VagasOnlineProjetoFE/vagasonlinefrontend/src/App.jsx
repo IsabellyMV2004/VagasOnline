@@ -67,8 +67,9 @@ export default function App() {
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import FormVaga from "./pages/FormVaga";
+import Home from "./pages/Home";
 
-function Home() {
+/*function Home() {
   return (
     <div className="container mt-4">
       <h1>🏠 Página Inicial</h1>
@@ -78,7 +79,7 @@ function Home() {
       </Link>
     </div>
   );
-}
+}*/
 
 function App() {
   return (
