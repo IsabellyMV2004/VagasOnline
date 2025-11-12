@@ -1,14 +1,28 @@
 package fipp.silvio.vagasonlinebe.entities;
 
+import com.google.gson.annotations.SerializedName;
+import org.springframework.data.annotation.Id;
+
 public class Cargo {
+    @SerializedName("_id")
+    private String id;
     private String nome;
 
-    public Cargo(String nome) {
+    public Cargo() {
+        this("", "");
+    }
+
+    public Cargo(String id, String nome) {
+        this.id = id;
         this.nome = nome;
     }
 
-    public Cargo() {
-        this("");
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {

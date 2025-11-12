@@ -1,6 +1,11 @@
 package fipp.silvio.vagasonlinebe.entities;
 
+import com.google.gson.annotations.SerializedName;
+import org.springframework.data.annotation.Id;
+
 public class Vaga {
+    @SerializedName("_id")
+    private String id;
     private String registro;
     private Empresa empresa;
     private String cargo;
@@ -13,7 +18,8 @@ public class Vaga {
     private String jornada_trabalho;
     private String remuneracao;
 
-    public Vaga(String registro, Empresa empresa, String cargo, String cidade, String estado, String pre_requisitos, String formacao, String conhecimentos_requeridos, String regime, String jornada_trabalho, String remuneracao) {
+    public Vaga(String id, String registro, Empresa empresa, String cargo, String cidade, String estado, String pre_requisitos, String formacao, String conhecimentos_requeridos, String regime, String jornada_trabalho, String remuneracao) {
+        this.id = id;
         this.registro = registro;
         this.empresa = empresa;
         this.cargo = cargo;
@@ -28,6 +34,14 @@ public class Vaga {
     }
 
     public Vaga() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRegistro() {

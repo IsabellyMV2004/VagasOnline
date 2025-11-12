@@ -46,7 +46,10 @@ public class CargosService extends BaseMongoService {
 
     public void create(Cargo cargo) {
         try {
-            database.getCollection(COLLECTION_NAME).insertOne(Document.parse(gson.toJson(cargo)));
+            Document doc = Document.parse(gson.toJson(cargo));
+            database.getCollection(COLLECTION_NAME).insertOne(doc);
+            // Pega o _id gerado e seta no objeto Java
+            cargo.setId(doc.getObjectId("_id").toHexString());
         } catch (Exception e) {
             System.out.println("Erro ao criar cargo: " + e.getMessage());
         }

@@ -48,11 +48,15 @@ public class VagasService extends BaseMongoService {
 
     public void create(Vaga vaga) {
         try {
-            database.getCollection(COLLECTION_VAGAS).insertOne(Document.parse(gson.toJson(vaga)));
+            Document doc = Document.parse(gson.toJson(vaga));
+            database.getCollection(COLLECTION_VAGAS).insertOne(doc);
+            // Pega o _id gerado e seta no objeto Java
+            vaga.setId(doc.getObjectId("_id").toHexString());
         } catch (Exception e) {
-            System.out.println("Erro ao criar vaga: " + e.getMessage());
+            System.out.println("Erro ao criar cargo: " + e.getMessage());
         }
     }
+
 
     public void update(String id, Vaga vaga) {
         try {
@@ -76,7 +80,9 @@ public class VagasService extends BaseMongoService {
 
     public void registrarInteresse(Interesse interesse) {
         try {
-            database.getCollection(COLLECTION_INTERESSES).insertOne(Document.parse(gson.toJson(interesse)));
+            Document doc = Document.parse(gson.toJson(interesse));
+            database.getCollection(COLLECTION_INTERESSES).insertOne(doc);
+            interesse.setId(doc.getObjectId("_id").toHexString());
         } catch (Exception e) {
             System.out.println("Erro ao registrar interesse: " + e.getMessage());
         }

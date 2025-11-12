@@ -46,7 +46,10 @@ public class EmpresasService extends BaseMongoService {
 
     public void create(Empresa empresa) {
         try {
-            database.getCollection(COLLECTION_NAME).insertOne(Document.parse(gson.toJson(empresa)));
+            Document doc = Document.parse(gson.toJson(empresa));
+            database.getCollection(COLLECTION_NAME).insertOne(doc);
+            // Pega o _id gerado e seta no objeto Java
+            empresa.setId(doc.getObjectId("_id").toHexString());
         } catch (Exception e) {
             System.out.println("Erro ao criar empresa: " + e.getMessage());
         }
