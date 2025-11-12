@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getVagas, deleteVaga, updateVaga } from "../services/vagasService";
+import { getVagas, deleteVaga } from "../services/vagasService";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 
@@ -25,12 +25,11 @@ export default function Home() {
   };
 
   // Função para excluir uma vaga
-  const handleDelete = async (vaga) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Deseja excluir esta vaga?")) {
       try {
-        // Usamos a combinação de 'nome_fantasia' e 'cargo' para identificar a vaga
-        await deleteVaga(vaga);  // Passando a vaga inteira para excluir
-        setVagas(vagas.filter((v) => v.empresa.nome_fantasia !== vaga.empresa.nome_fantasia || v.cargo !== vaga.cargo)); // Remove a vaga do estado diretamente
+        await deleteVaga(id);
+        setVagas(vagas.filter((v) => v.id !== id));
       } catch (err) {
         console.error("Erro ao excluir:", err);
       }
@@ -38,8 +37,8 @@ export default function Home() {
   };
 
   // Função para editar uma vaga
-  const handleEdit = (vaga) => {
-    navigate(`/form/${vaga.id}`); // Usando a combinação para editar
+  const handleEdit = (id) => {
+    navigate(`/form/${id}`);
   };
 
   // Função para lidar com a pesquisa
@@ -51,7 +50,7 @@ export default function Home() {
   const vagasFiltradas = vagas.filter(
     (v) =>
       v.cargo.toLowerCase().includes(search.toLowerCase()) ||
-      v.empresa.nome_fantasia.toLowerCase().includes(search.toLowerCase())
+      v.empresa?.nome_fantasia?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -72,11 +71,10 @@ export default function Home() {
       {/* 📋 Lista de Vagas */}
       <div className="vaga-list">
         {vagasFiltradas.map((vaga) => (
-          <div key={`${vaga.empresa.nome_fantasia}-${vaga.cargo}`} className="vaga-card">
+          <div key={vaga.id} className="vaga-card">
             <div>
               <h3>{vaga.cargo}</h3>
-              {/* Renderizando o nome_fantasia de vaga.empresa, que é uma string */}
-              <p>{vaga.empresa.nome_fantasia}</p>
+              <p>{vaga.empresa?.nome_fantasia}</p>
               <p>
                 {vaga.cidade} - {vaga.estado}
               </p>
@@ -87,15 +85,15 @@ export default function Home() {
               <button
                 className="menu-btn"
                 onClick={() =>
-                  setMenuAberto(menuAberto === `${vaga.empresa.nome_fantasia}-${vaga.cargo}` ? null : `${vaga.empresa.nome_fantasia}-${vaga.cargo}`)
+                  setMenuAberto(menuAberto === vaga.id ? null : vaga.id)
                 }
               >
                 ⋮
               </button>
-              {menuAberto === `${vaga.empresa.nome_fantasia}-${vaga.cargo}` && (
+              {menuAberto === vaga.id && (
                 <div className="menu-opcoes">
-                  <button onClick={() => handleEdit(vaga)}>✏️ Editar</button>
-                  <button onClick={() => handleDelete(vaga)}>🗑️ Excluir</button>
+                  <button onClick={() => handleEdit(vaga.id)}>✏️ Editar</button>
+                  <button onClick={() => handleDelete(vaga.id)}>🗑️ Excluir</button>
                 </div>
               )}
             </div>

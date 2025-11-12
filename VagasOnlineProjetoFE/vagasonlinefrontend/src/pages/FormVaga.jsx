@@ -46,23 +46,24 @@ export default function FormVaga() {
 
   // 🔹 Se for edição, carrega os dados da vaga
   useEffect(() => {
-    if (modoEdicao) {
-      getVagaById(id)
-        .then((dados) => setVaga({
-          empresa: dados.empresa || "",
-          cargo: dados.cargo || "",
-          cidade: dados.cidade,
-          estado: dados.estado,
-          requisitos: dados.requisitos,
-          formacao: dados.formacao,
-          conhecimentos: dados.conhecimentos,
-          regime: dados.regime,
-          jornada: dados.jornada,
-          remuneracao: dados.remuneracao,
-        }))
-        .catch((erro) => console.error("Erro ao buscar vaga:", erro));
-    }
-  }, [id, modoEdicao]);
+  if (modoEdicao) {
+    getVagaById(id)
+      .then((dados) => setVaga({
+          empresa: dados.empresa?._id || "",
+          cargo: dados.cargo?._id || "",
+          cidade: dados.cidade || "",
+          estado: dados.estado || "",
+          requisitos: dados.requisitos || "",
+          formacao: dados.formacao || "",
+          conhecimentos: dados.conhecimentos || "",
+          regime: dados.regime || "",
+          jornada: dados.jornada || "",
+          remuneracao: dados.remuneracao || "",
+        })
+      )
+      .catch((erro) => console.error("Erro ao buscar vaga:", erro));
+  }
+}, [id, modoEdicao]);
 
   const handleChange = (e) => {
     setVaga({ ...vaga, [e.target.name]: e.target.value });
@@ -72,10 +73,13 @@ export default function FormVaga() {
     e.preventDefault();
 
     try {
+      const empresaSelecionada = empresas.find((e) => e.id === vaga.empresa);
+      const cargoSelecionado = cargos.find((c) => c.id === vaga.cargo);
+      
       const vagaData = {
         ...vaga,
-        empresa: empresas.find((e) => e.nome_fantasia === vaga.empresa), // encontra a empresa completa com base no nome_fantasia
-        cargo: vaga.cargo, // manda o cargo como string
+        empresa: empresaSelecionada, // encontra a empresa completa com base no nome_fantasia
+        cargo: cargoSelecionado, // manda o cargo como string
       };
 
 
@@ -109,7 +113,7 @@ export default function FormVaga() {
           >
             <option value="">Selecione a empresa</option>
             {empresas.map((e) => (
-              <option key={e.nome_fantasia} value={e.nome_fantasia}>
+              <option key={e.id} value={e.id}>
                 {e.nome_fantasia}
               </option>
             ))}
@@ -125,7 +129,7 @@ export default function FormVaga() {
           >
             <option value="">Selecione o cargo</option>
             {cargos.map((c) => (
-              <option key={c.nome} value={c.nome}>
+              <option key={c.id} value={c.id}>
                 {c.nome}
               </option>
             ))}
