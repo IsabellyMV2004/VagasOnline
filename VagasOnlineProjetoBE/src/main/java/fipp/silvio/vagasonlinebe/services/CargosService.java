@@ -26,8 +26,12 @@ public class CargosService extends BaseMongoService {
     public List<Cargo> getAll() {
         List<Cargo> cargoList = new ArrayList<>();
         try (MongoCursor<Document> cursor = database.getCollection(COLLECTION_NAME).find().iterator()) {
-            while (cursor.hasNext())
-                cargoList.add(gson.fromJson(cursor.next().toJson(), Cargo.class));
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Converte ObjectId em String
+                doc.put("_id", doc.getObjectId("_id").toHexString());
+                cargoList.add(gson.fromJson(doc.toJson(), Cargo.class));
+            }
         } catch (Exception e) {
             System.out.println("Erro ao buscar cargos: " + e.getMessage());
         }
@@ -36,8 +40,14 @@ public class CargosService extends BaseMongoService {
 
     public Cargo getById(String id) {
         try {
-            Document doc = database.getCollection(COLLECTION_NAME).find(Filters.eq("_id", new ObjectId(id))).first();
-            return (doc != null) ? gson.fromJson(doc.toJson(), Cargo.class) : null;
+            Document doc = database.getCollection(COLLECTION_NAME)
+                    .find(Filters.eq("_id", new ObjectId(id)))
+                    .first();
+            if (doc != null) {
+                doc.put("_id", doc.getObjectId("_id").toHexString());
+                return gson.fromJson(doc.toJson(), Cargo.class);
+            }
+            return null;
         } catch (Exception e) {
             System.out.println("Erro ao buscar cargo por ID: " + e.getMessage());
             return null;
@@ -48,7 +58,6 @@ public class CargosService extends BaseMongoService {
         try {
             Document doc = Document.parse(gson.toJson(cargo));
             database.getCollection(COLLECTION_NAME).insertOne(doc);
-            // Pega o _id gerado e seta no objeto Java
             cargo.setId(doc.getObjectId("_id").toHexString());
         } catch (Exception e) {
             System.out.println("Erro ao criar cargo: " + e.getMessage());
@@ -68,7 +77,8 @@ public class CargosService extends BaseMongoService {
 
     public void delete(String id) {
         try {
-            database.getCollection(COLLECTION_NAME).deleteOne(Filters.eq("_id", new ObjectId(id)));
+            database.getCollection(COLLECTION_NAME)
+                    .deleteOne(Filters.eq("_id", new ObjectId(id)));
         } catch (Exception e) {
             System.out.println("Erro ao deletar cargo: " + e.getMessage());
         }

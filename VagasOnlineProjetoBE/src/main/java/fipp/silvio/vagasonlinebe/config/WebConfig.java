@@ -1,4 +1,3 @@
-// fipp/silvio/vagasonlinebe/config/WebConfig.java
 package fipp.silvio.vagasonlinebe.config;
 
 import org.springframework.context.annotation.Bean;
@@ -14,8 +13,12 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173") // endereço do frontend
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+                        .allowedOrigins(
+                                "http://localhost:5173", // caso use Vite
+                                "http://localhost:3000"  // caso use Create React App
+                        )
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*"); // boa prática: liberar todos os headers
             }
         };
     }

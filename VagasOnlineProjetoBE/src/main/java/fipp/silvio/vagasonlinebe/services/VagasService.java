@@ -28,8 +28,12 @@ public class VagasService extends BaseMongoService {
     public List<Vaga> getAll() {
         List<Vaga> vagaList = new ArrayList<>();
         try (MongoCursor<Document> cursor = database.getCollection(COLLECTION_VAGAS).find().iterator()) {
-            while (cursor.hasNext())
-                vagaList.add(gson.fromJson(cursor.next().toJson(), Vaga.class));
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Converte ObjectId em String
+                doc.put("_id", doc.getObjectId("_id").toHexString());
+                vagaList.add(gson.fromJson(doc.toJson(), Vaga.class));
+            }
         } catch (Exception e) {
             System.out.println("Erro ao buscar vagas: " + e.getMessage());
         }
@@ -38,8 +42,14 @@ public class VagasService extends BaseMongoService {
 
     public Vaga getById(String id) {
         try {
-            Document doc = database.getCollection(COLLECTION_VAGAS).find(Filters.eq("_id", new ObjectId(id))).first();
-            return (doc != null) ? gson.fromJson(doc.toJson(), Vaga.class) : null;
+            Document doc = database.getCollection(COLLECTION_VAGAS)
+                    .find(Filters.eq("_id", new ObjectId(id)))
+                    .first();
+            if (doc != null) {
+                doc.put("_id", doc.getObjectId("_id").toHexString());
+                return gson.fromJson(doc.toJson(), Vaga.class);
+            }
+            return null;
         } catch (Exception e) {
             System.out.println("Erro ao buscar vaga por ID: " + e.getMessage());
             return null;
@@ -50,13 +60,11 @@ public class VagasService extends BaseMongoService {
         try {
             Document doc = Document.parse(gson.toJson(vaga));
             database.getCollection(COLLECTION_VAGAS).insertOne(doc);
-            // Pega o _id gerado e seta no objeto Java
             vaga.setId(doc.getObjectId("_id").toHexString());
         } catch (Exception e) {
-            System.out.println("Erro ao criar cargo: " + e.getMessage());
+            System.out.println("Erro ao criar vaga: " + e.getMessage());
         }
     }
-
 
     public void update(String id, Vaga vaga) {
         try {

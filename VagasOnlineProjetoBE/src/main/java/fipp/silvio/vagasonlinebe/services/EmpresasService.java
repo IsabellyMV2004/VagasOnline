@@ -26,8 +26,12 @@ public class EmpresasService extends BaseMongoService {
     public List<Empresa> getAll() {
         List<Empresa> empresaList = new ArrayList<>();
         try (MongoCursor<Document> cursor = database.getCollection(COLLECTION_NAME).find().iterator()) {
-            while (cursor.hasNext())
-                empresaList.add(gson.fromJson(cursor.next().toJson(), Empresa.class));
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Converte o ObjectId para string
+                doc.put("_id", doc.getObjectId("_id").toHexString());
+                empresaList.add(gson.fromJson(doc.toJson(), Empresa.class));
+            }
         } catch (Exception e) {
             System.out.println("Erro ao buscar empresas: " + e.getMessage());
         }
@@ -36,8 +40,14 @@ public class EmpresasService extends BaseMongoService {
 
     public Empresa getById(String id) {
         try {
-            Document doc = database.getCollection(COLLECTION_NAME).find(Filters.eq("_id", new ObjectId(id))).first();
-            return (doc != null) ? gson.fromJson(doc.toJson(), Empresa.class) : null;
+            Document doc = database.getCollection(COLLECTION_NAME)
+                    .find(Filters.eq("_id", new ObjectId(id)))
+                    .first();
+            if (doc != null) {
+                doc.put("_id", doc.getObjectId("_id").toHexString());
+                return gson.fromJson(doc.toJson(), Empresa.class);
+            }
+            return null;
         } catch (Exception e) {
             System.out.println("Erro ao buscar empresa por ID: " + e.getMessage());
             return null;
