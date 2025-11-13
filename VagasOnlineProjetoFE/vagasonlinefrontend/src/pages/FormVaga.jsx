@@ -273,32 +273,32 @@ export default function FormVaga() {
 
   // Se for edição carrega os dados da vaga
   useEffect(() => {
-    async function carregarVaga() {
-      if (!modoEdicao) return;
+  if (!modoEdicao || empresas.length === 0 || cargos.length === 0) 
+    return;
 
-      try {
-        const dados = await getVagaById(id);
-
-        // Garante compatibilidade de campos do backend
-        setVaga({
-          empresa: dados.empresa?._id || dados.empresa?.id || "",
-          cargo: dados.cargo?._id || dados.cargo?.id || "",
-          cidade: dados.cidade || "",
-          estado: dados.estado || "",
-          requisitos: dados.requisitos || "",
-          formacao: dados.formacao || "",
-          conhecimentos: dados.conhecimentos || "",
-          regime: dados.regime || "",
-          jornada: dados.jornada || "",
-          remuneracao: dados.remuneracao || "",
-        });
-      } catch (error) {
-        console.error("Erro ao buscar vaga:", error);
-      }
+  async function carregarVaga() {
+    try {
+      const dados = await getVagaById(id);
+      setVaga({
+        empresa: dados.empresa?._id || dados.empresa?.id || "",
+        cargo: dados.cargo?._id || dados.cargo?.id || "",
+        cidade: dados.cidade || "",
+        estado: dados.estado || "",
+        requisitos: dados.requisitos || "",
+        formacao: dados.formacao || "",
+        conhecimentos: dados.conhecimentos || "",
+        regime: dados.regime || "",
+        jornada: dados.jornada || "",
+        remuneracao: dados.remuneracao || "",
+      });
+    } catch (error) {
+      console.error("Erro ao buscar vaga:", error);
     }
+  }
 
-    carregarVaga();
-  }, [id, modoEdicao]);
+  carregarVaga();
+}, [id, modoEdicao, empresas, cargos]);
+
 
   const handleChange = (e) => {
     setVaga({ ...vaga, [e.target.name]: e.target.value });
