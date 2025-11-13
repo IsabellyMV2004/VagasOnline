@@ -73,7 +73,7 @@ export default function Home() {
         {vagasFiltradas.map((vaga) => (
           <div key={vaga.id} className="vaga-card">
             <div>
-              <h3>{vaga.cargo}</h3>
+              <h3>{vaga.cargo?.nome}</h3>
               <p>{vaga.empresa?.nome_fantasia}</p>
               <p>
                 {vaga.cidade} - {vaga.estado}
