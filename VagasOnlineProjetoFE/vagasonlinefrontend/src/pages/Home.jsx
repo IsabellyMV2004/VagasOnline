@@ -46,12 +46,14 @@ export default function Home() {
     setSearch(e.target.value);
   };
 
-  // Filtra as vagas com base na pesquisa
-  const vagasFiltradas = vagas.filter(
-    (v) =>
-      v.cargo.toLowerCase().includes(search.toLowerCase()) ||
-      v.empresa?.nome_fantasia?.toLowerCase().includes(search.toLowerCase())
-  );
+  const vagasFiltradas = vagas.filter((v) => {
+  const cargo = v.cargo?.nome?.toLowerCase() || "";
+  const empresa = v.empresa?.nome_fantasia?.toLowerCase() || "";
+  const busca = search.toLowerCase();
+
+  return cargo.includes(busca) || empresa.includes(busca);
+});
+
 
   return (
     <div className="container">
@@ -73,11 +75,11 @@ export default function Home() {
         {vagasFiltradas.map((vaga) => (
           <div key={vaga.id} className="vaga-card">
             <div>
-              <h3>{vaga.cargo?.nome}</h3>
-              <p>{vaga.empresa?.nome_fantasia}</p>
-              <p>
-                {vaga.cidade} - {vaga.estado}
-              </p>
+              <h3>Vaga de {vaga.cargo}</h3>
+              <p>Empresa: {vaga.empresa?.nome_fantasia}</p>
+              <p>{vaga.cidade} ({vaga.estado})</p>
+              <p>{vaga.remuneracao} por mês</p>
+              <p>{vaga.jornada_trabalho} ({vaga.regime})</p>
             </div>
 
             {/* ⋮ Menu de opções */}
