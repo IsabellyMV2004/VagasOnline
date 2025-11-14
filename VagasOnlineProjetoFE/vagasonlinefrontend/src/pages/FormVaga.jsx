@@ -57,7 +57,6 @@ export default function FormVaga() {
     carregarEmpresasECargos();
   }, []);
 
-  // Carregar vaga somente DEPOIS que empresas e cargos estiverem carregados
   useEffect(() => {
     if (!modoEdicao) return;
     if (empresas.length === 0 || cargos.length === 0) return;
@@ -68,8 +67,8 @@ export default function FormVaga() {
 
         setVaga({
           registro: dados.registro || "",
-          empresa: dados.empresa?.id || dados.empresa?._id || "",
-          cargo: dados.cargo?.id || dados.cargo?._id || "",
+          empresa: dados.empresa || "",
+          cargo: cargos.find(c => c.nome === dados.cargo)?.id || "",
           cidade: dados.cidade || "",
           estado: dados.estado || "",
           pre_requisitos: dados.pre_requisitos || "",
@@ -98,13 +97,17 @@ export default function FormVaga() {
       const empresaSelecionada = empresas.find((e) => e.id === vaga.empresa);
       const cargoSelecionado = cargos.find((c) => c.id === vaga.cargo);
 
+      const cargoNome = cargoSelecionado ? cargoSelecionado.nome : vaga.cargo;
       const vagaData = {
         ...vaga,
-        empresa: empresaSelecionada,
-        cargo: cargoSelecionado,
+        empresa: empresaSelecionada ? empresaSelecionada.id : vaga.empresa,
+        cargo: cargoSelecionado ? cargoSelecionado.nome : vaga.cargo
       };
 
+
+
       if (modoEdicao) {
+        console.log("Vaga enviada no PUT:", JSON.stringify(vagaData, null, 2));
         await updateVaga(id, vagaData);
         alert("Vaga atualizada com sucesso!");
       } else {
@@ -143,11 +146,7 @@ export default function FormVaga() {
             onChange={handleChange}
             required
           >
-          {!modoEdicao && (
-            <option value="">
-              Selecione a empresa
-            </option>
-          )}
+            {!modoEdicao && <option value="">Selecione a empresa</option>}
             {empresas.map((e) => (
               <option key={e.id} value={e.id}>
                 {e.nome_fantasia}
@@ -162,12 +161,7 @@ export default function FormVaga() {
             onChange={handleChange}
             required
           >
-           {!modoEdicao && (
-            <option value="">
-              Selecione o cargo
-            </option>
-          )}
-
+            {!modoEdicao && <option value="">Selecione o cargo</option>}
             {cargos.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.nome}
@@ -181,8 +175,8 @@ export default function FormVaga() {
             name="cidade"
             value={vaga.cidade}
             onChange={handleChange}
-            placeholder="Informe a cidade..."
             required
+            placeholder="Informe a cidade..."
           />
 
           <label>Estado:</label>
@@ -191,8 +185,8 @@ export default function FormVaga() {
             name="estado"
             value={vaga.estado}
             onChange={handleChange}
-            placeholder="Informe o estado..."
             required
+            placeholder="Informe o estado..."
           />
 
           <label>Pré-Requisitos:</label>
@@ -201,8 +195,8 @@ export default function FormVaga() {
             name="pre_requisitos"
             value={vaga.pre_requisitos}
             onChange={handleChange}
-            placeholder="Informe os pré-requisitos..."
             required
+            placeholder="Informe os pré-requisitos..."
           />
 
           <label>Formação:</label>
@@ -263,7 +257,8 @@ export default function FormVaga() {
       </div>
     </div>
   );
-}*/
+}
+*/
 
 
 import React, { useState, useEffect } from "react";
@@ -325,6 +320,7 @@ export default function FormVaga() {
     carregarEmpresasECargos();
   }, []);
 
+  // Carregar dados da vaga no modo de edição
   useEffect(() => {
     if (!modoEdicao) return;
     if (empresas.length === 0 || cargos.length === 0) return;
@@ -335,8 +331,8 @@ export default function FormVaga() {
 
         setVaga({
           registro: dados.registro || "",
-          empresa: dados.empresa || "",
-          cargo: cargos.find(c => c.nome === dados.cargo)?.id || "",
+          empresa: dados.empresa?.id || dados.empresa?._id || "", // ← Seleciona o ID real da empresa
+          cargo: cargos.find(c => c.nome === dados.cargo)?.id || "", // ← Converte o NOME do cargo para ID
           cidade: dados.cidade || "",
           estado: dados.estado || "",
           pre_requisitos: dados.pre_requisitos || "",
@@ -365,14 +361,11 @@ export default function FormVaga() {
       const empresaSelecionada = empresas.find((e) => e.id === vaga.empresa);
       const cargoSelecionado = cargos.find((c) => c.id === vaga.cargo);
 
-      const cargoNome = cargoSelecionado ? cargoSelecionado.nome : vaga.cargo;
       const vagaData = {
         ...vaga,
-        empresa: empresaSelecionada ? empresaSelecionada.id : vaga.empresa,
-        cargo: cargoSelecionado ? cargoSelecionado.nome : vaga.cargo
+        empresa: empresaSelecionada ? empresaSelecionada.id : vaga.empresa, 
+        cargo: cargoSelecionado ? cargoSelecionado.nome : vaga.cargo, // ← envia o NOME do cargo!
       };
-
-
 
       if (modoEdicao) {
         console.log("Vaga enviada no PUT:", JSON.stringify(vagaData, null, 2));
