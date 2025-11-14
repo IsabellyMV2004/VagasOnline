@@ -47,7 +47,7 @@ export default function Home() {
   };
 
   const vagasFiltradas = vagas.filter((v) => {
-  const cargo = v.cargo?.nome?.toLowerCase() || "";
+ const cargo = (v.cargo || "").toLowerCase();
   const empresa = v.empresa?.nome_fantasia?.toLowerCase() || "";
   const busca = search.toLowerCase();
 

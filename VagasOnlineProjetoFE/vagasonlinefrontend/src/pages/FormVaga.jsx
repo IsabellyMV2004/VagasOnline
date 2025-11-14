@@ -279,8 +279,8 @@ export default function FormVaga() {
 
   const [vaga, setVaga] = useState({
     registro: "",
-    empresa: "", // armazena id da empresa selecionada
-    cargo: "",   // armazena id do cargo selecionado
+    empresa: "",
+    cargo: "",
     cidade: "",
     estado: "",
     pre_requisitos: "",
@@ -325,7 +325,6 @@ export default function FormVaga() {
     carregarEmpresasECargos();
   }, []);
 
-  // Carregar vaga somente DEPOIS que empresas e cargos estiverem carregados
   useEffect(() => {
     if (!modoEdicao) return;
     if (empresas.length === 0 || cargos.length === 0) return;
@@ -336,9 +335,7 @@ export default function FormVaga() {
 
         setVaga({
           registro: dados.registro || "",
-          // empresa: se backend enviar objeto -> pega id, senão tenta id/_id
-          empresa: dados.empresa?.id || dados.empresa?._id || "",
-          // cargo no banco é string com o nome, então aqui convertemos nome -> id do select
+          empresa: dados.empresa || "",
           cargo: cargos.find(c => c.nome === dados.cargo)?.id || "",
           cidade: dados.cidade || "",
           estado: dados.estado || "",
@@ -365,28 +362,20 @@ export default function FormVaga() {
     e.preventDefault();
 
     try {
-      // encontra objetos completos a partir dos ids selecionados
-      const empresaSelecionada = empresas.find((emp) => emp.id === vaga.empresa);
+      const empresaSelecionada = empresas.find((e) => e.id === vaga.empresa);
       const cargoSelecionado = cargos.find((c) => c.id === vaga.cargo);
 
-      // converte id -> nome para enviar ao backend (opção 2)
       const cargoNome = cargoSelecionado ? cargoSelecionado.nome : vaga.cargo;
-
-      // monta payload conforme backend provavelmente espera:
-      // -> empresa como objeto com id
-      // -> cargo como STRING (nome)
       const vagaData = {
         ...vaga,
-        // envia empresa como objeto com id (ajuste se seu backend espera outro formato)
-        empresa: empresaSelecionada ? { id: empresaSelecionada.id } : (vaga.empresa ? { id: vaga.empresa } : null),
-        // envia cargo como nome string
-        cargo: cargoNome,
+        empresa: empresaSelecionada ? empresaSelecionada.id : vaga.empresa,
+        cargo: cargoSelecionado ? cargoSelecionado.nome : vaga.cargo
       };
 
-      // debug: mostre o JSON antes de enviar
-      console.log("Payload enviado (PUT/POST):", vagaData);
+
 
       if (modoEdicao) {
+        console.log("Vaga enviada no PUT:", JSON.stringify(vagaData, null, 2));
         await updateVaga(id, vagaData);
         alert("Vaga atualizada com sucesso!");
       } else {
