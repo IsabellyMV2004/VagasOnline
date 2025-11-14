@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-28:12
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:2:1-31:12
 MERGED from [com.google.android.material:material:1.13.0] C:\Users\ESTUDANTE\.gradle\caches\8.13\transforms\02ddf3f4bb9ca687bc1d0c2c5cb05368\transformed\material-1.13.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] C:\Users\ESTUDANTE\.gradle\caches\8.13\transforms\25fdb7c1de8ca2c3635a448f3d0b2a42\transformed\constraintlayout-2.2.1\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.appcompat:appcompat-resources:1.7.1] C:\Users\ESTUDANTE\.gradle\caches\8.13\transforms\9a7247009cd972f866749dca3325b2ab\transformed\appcompat-resources-1.7.1\AndroidManifest.xml:2:1-7:12
@@ -58,8 +58,8 @@ ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidMan
 	android:name
 		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:7:5-26:19
-INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:7:5-26:19
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:7:5-28:19
+INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:7:5-28:19
 MERGED from [com.google.android.material:material:1.13.0] C:\Users\ESTUDANTE\.gradle\caches\8.13\transforms\02ddf3f4bb9ca687bc1d0c2c5cb05368\transformed\material-1.13.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.13.0] C:\Users\ESTUDANTE\.gradle\caches\8.13\transforms\02ddf3f4bb9ca687bc1d0c2c5cb05368\transformed\material-1.13.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] C:\Users\ESTUDANTE\.gradle\caches\8.13\transforms\25fdb7c1de8ca2c3635a448f3d0b2a42\transformed\constraintlayout-2.2.1\AndroidManifest.xml:7:5-20
@@ -98,22 +98,26 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ES
 		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:10:9-65
 	android:usesCleartextTraffic
 		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:8:9-44
+activity#com.example.appandroid.InteresseActivity
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:18:9-55
+	android:name
+		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:18:19-52
 activity#com.example.appandroid.MainActivity
-ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:17:9-25:20
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:20:9-27:20
 	android:exported
-		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:19:13-36
+		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:22:13-36
 	android:name
-		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:18:13-41
+		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:21:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:20:13-24:29
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:23:13-26:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:21:17-69
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:24:17-69
 	android:name
-		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:21:25-66
+		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:24:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:23:17-77
+ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:25:17-77
 	android:name
-		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:23:27-74
+		ADDED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml:25:27-74
 uses-sdk
 INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\ESTUDANTE\Videos\VagasOnline\Android\app\src\main\AndroidManifest.xml

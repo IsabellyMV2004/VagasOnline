@@ -30,6 +30,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.AppAndroid"
         android:usesCleartextTraffic="true" >
+        <activity android:name="com.example.appandroid.InteresseActivity" />
         <activity
             android:name="com.example.appandroid.MainActivity"
             android:exported="true" >
