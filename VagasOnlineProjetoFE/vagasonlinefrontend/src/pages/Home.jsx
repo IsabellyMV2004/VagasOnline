@@ -55,6 +55,9 @@ export default function Home() {
   const estado = v.estado.toLowerCase();
   const regime = v.regime.toLowerCase();
   const formacao = v.formacao.toLowerCase();
+  const  registro = v.registro.toLowerCase();
+  const  pre_requisitos = v.pre_requisitos.toLowerCase();
+  const  conhecimentos_requeridos = v.conhecimentos_requeridos.toLowerCase();
   const busca = search.toLowerCase();
 
 
@@ -65,7 +68,10 @@ export default function Home() {
   || cidade.includes(busca) 
   || estado.includes(busca) 
   || regime.includes(busca) 
-  || formacao.includes(busca);
+  || formacao.includes(busca)
+  || registro.includes(busca)
+  || pre_requisitos.includes(busca)
+  || conhecimentos_requeridos.includes(busca);
 });
 
 
@@ -94,6 +100,7 @@ export default function Home() {
               <p>{vaga.cidade} ({vaga.estado})</p>
               <p>{vaga.remuneracao} por mês</p>
               <p>{vaga.jornada_trabalho} ({vaga.regime})</p>
+              <p>Pré-Requisitos: {vaga.pre_requisitos}</p>
             </div>
 
             {/* ⋮ Menu de opções */}
