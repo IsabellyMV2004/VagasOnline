@@ -47,11 +47,25 @@ export default function Home() {
   };
 
   const vagasFiltradas = vagas.filter((v) => {
- const cargo = (v.cargo || "").toLowerCase();
+  const cargo = (v.cargo || "").toLowerCase();
   const empresa = v.empresa?.nome_fantasia?.toLowerCase() || "";
+  const remuneracao = v.remuneracao.toLowerCase();
+  const jornada_trabalho = v.jornada_trabalho.toLowerCase();
+  const cidade = v.cidade.toLowerCase();
+  const estado = v.estado.toLowerCase();
+  const regime = v.regime.toLowerCase();
+  const formacao = v.formacao.toLowerCase();
   const busca = search.toLowerCase();
 
-  return cargo.includes(busca) || empresa.includes(busca);
+
+  return cargo.includes(busca) 
+  || empresa.includes(busca) 
+  || remuneracao.includes(busca) 
+  || jornada_trabalho.includes(busca) 
+  || cidade.includes(busca) 
+  || estado.includes(busca) 
+  || regime.includes(busca) 
+  || formacao.includes(busca);
 });
 
 
